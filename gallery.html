@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Tokuhisa Hiroki  </title>
+<link rel="stylesheet" href="./css/normalize.css">
+<link rel="stylesheet" href="./css/gallery.css">
+
+
+<script src="./js/vendor/jquery-1.10.2.min.js"></script>
+<script src="./js/vendor/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="./js/main.js"></script>
+
+<script type="text/javascript">  
+    $(function() {  
+        $("#instagram").text("loading...");  
+        var html = '<div>';  
+        $.ajax({  
+            url: "instagram.php",//PHPファイルのURL  
+            type:"POST",  
+            dataType: "json"  
+        }).done(function(data){  
+            $("#instagram").text("");  
+            var length = data.data.length;  
+            
+            for (var i = length -1; 0 <= i; i--) {  
+                var d = data.data[length-1-i];
+                 
+                //<p>'+d.location.name +'</p>
+                
+              
+                html += '<a href="' + d.link + '" target="_blank"><p><img src="' + d.images.standard_resolution.url + '" >';
+                html +='<strong>'+d.location.name +'</strong><span></span></p></a>'      
+                 
+            } 
+            html +='</div>'
+        }).fail(function(){  
+            //通信失敗時の処理  
+            html = 'loading...';  
+        }).always(function(){  
+            //通信完了時の処理  
+            $("#instagram").html(html);  
+        });  
+      
+    });  
+    </script>  
+
+</head>
+<body >
+
+    <header class="page-header" role="banner">
+            <a href="index.html"><img src="img/select/logo.jpg" width=205px height=80px></a>
+  
+</header>
+
+<section id="gallery1" class="gallery">
+        <div class="inner">
+       
+<div class="page-main" role="main">
+     
+
+    <div id="images">
+        <h3>Gallery</h3>
+        <h1>趣味で撮った写真の数々<br>インスタグラムで毎日投稿しています。</h1>
+         <div class="inner clearfix">      
+                <div id="instagram">  
+                    </div>  
+        </div>
+        <a href="index.html"><h2>Home</h2></a>>  
+    </div>
+</div>
+</div>
+</section>
+
+<footer class="page-footer" role="contentinfo">
+        <h3><a href="index.html">Home   </a><a href="profile.html">Profile  </a><a href="gallery.html">gallery  </a><a href="Research.html">Research    </a></h3>
+     
+    </footer>
+</body>
+</html>
